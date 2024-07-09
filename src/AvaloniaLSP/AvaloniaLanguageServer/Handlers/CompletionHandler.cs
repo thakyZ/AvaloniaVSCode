@@ -90,7 +90,7 @@ public class CompletionHandler : CompletionHandlerBase
         return _workspace.CompletionMetadata;
     }
 
-    public CompletionHandler(Workspace workspace, DocumentSelector documentSelector)
+    public CompletionHandler(Workspace workspace, TextDocumentSelector documentSelector)
     {
         _workspace = workspace;
         _documentSelector = documentSelector;
@@ -121,7 +121,7 @@ public class CompletionHandler : CompletionHandlerBase
     }
 
     readonly Workspace _workspace;
-    readonly DocumentSelector _documentSelector;
+    readonly TextDocumentSelector _documentSelector;
 
     readonly CompletionEngine _completionEngine;
 

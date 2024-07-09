@@ -10,9 +10,8 @@ public class TextDocumentSyncHandler: TextDocumentSyncHandlerBase
 {
     private readonly ILogger<TextDocumentSyncHandler> _logger;
     private readonly ILanguageServerConfiguration _configuration;
-    private readonly DocumentSelector _documentSelector;
+    private readonly TextDocumentSelector _documentSelector;
     private readonly Workspace _workspace;
-    
 
     public override async Task<Unit> Handle(DidOpenTextDocumentParams request, CancellationToken cancellationToken)
     {
@@ -20,13 +19,13 @@ public class TextDocumentSyncHandler: TextDocumentSyncHandlerBase
 
         var conf = await _configuration.GetScopedConfiguration(uri, cancellationToken);
         var options = new ServerOptions();
-        
+
         conf.GetSection("Avalonia").Bind(options);
 
         string text = request.TextDocument.Text;
         await _workspace.InitializeAsync(uri);
         _workspace.BufferService.Add(uri, text);
-        
+
         _logger.LogInformation("** DidOpenText: {Uri}", uri);
 
         return Unit.Value;
@@ -58,19 +57,20 @@ public class TextDocumentSyncHandler: TextDocumentSyncHandlerBase
 
     public override Task<Unit> Handle(DidCloseTextDocumentParams request, CancellationToken cancellationToken)
     {
-        
+
         if (_configuration.TryGetScopedConfiguration(request.TextDocument.Uri, out var disposable))
             disposable.Dispose();
 
         var uri = request.TextDocument.Uri;
         _workspace.BufferService.Remove(uri);
-        
+
         _logger.LogInformation("** Did Close Doc: {Uri}", uri);
 
         return Task.FromResult(Unit.Value);
     }
 
-    protected override TextDocumentSyncRegistrationOptions CreateRegistrationOptions(SynchronizationCapability capability,
+    protected override TextDocumentSyncRegistrationOptions CreateRegistrationOptions(
+        TextSynchronizationCapability capability,
         ClientCapabilities clientCapabilities)
     {
         return new TextDocumentSyncRegistrationOptions
@@ -80,16 +80,16 @@ public class TextDocumentSyncHandler: TextDocumentSyncHandlerBase
             Save = new SaveOptions {IncludeText = false}
         };
     }
-    
+
     public override TextDocumentAttributes GetTextDocumentAttributes(DocumentUri uri)
     {
         return new TextDocumentAttributes(uri, uri.Scheme!, "axaml");
     }
-    
+
     public TextDocumentSyncHandler(
-        ILogger<TextDocumentSyncHandler> logger, 
+        ILogger<TextDocumentSyncHandler> logger,
         ILanguageServerConfiguration configuration,
-        DocumentSelector documentSelector,
+        TextDocumentSelector documentSelector,
         Workspace workspace)
     {
         _logger = logger;
@@ -97,7 +97,7 @@ public class TextDocumentSyncHandler: TextDocumentSyncHandlerBase
         _documentSelector = documentSelector;
         _workspace = workspace;
     }
-    
+
     public class ServerOptions
     {
         public bool CompletionWord { get; set; }
