@@ -1,16 +1,16 @@
 {
-  "name": "vscode-avalonia",
-  "displayName": "Avalonia for VSCode",
-  "description": "Avalonia tools for Visual Studio Code",
-  "publisher": "AvaloniaTeam",
-  "version": "0.0.31",
+  "name": "vscode-avalonia-community",
+  "displayName": "Avalonia for VSCode Community",
+  "description": "Avalonia tools for Visual Studio Code (community fork)",
+  "publisher": "microhobby",
+  "version": "0.0.34",
   "license": "MIT",
   "preview": true,
   "qna": "false",
   "sponsor": {
     "url": "https://github.com/sponsors/AvaloniaUI"
   },
-  "icon": "./media/icon.png",
+  "icon": "media/icon.png",
   "engines": {
     "vscode": "^1.79.0"
   },
