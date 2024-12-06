@@ -9,7 +9,7 @@ import { spawn } from "child_process";
 
 import { AppConstants, logger } from "../util/Utilities";
 
-const extensionId = "AvaloniaTeam.vscode-avalonia";
+const extensionId = "microhobby.vscode-avalonia-community";
 
 /**
  * Builds the solution model by parsing the solution file and updating the workspace state.

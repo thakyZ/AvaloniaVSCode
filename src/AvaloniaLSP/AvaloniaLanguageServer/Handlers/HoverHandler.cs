@@ -40,7 +40,7 @@ public sealed class HoverHandler : HoverHandlerBase
         return hover;
     }
 
-    public HoverHandler(Workspace workspace, DocumentSelector documentSelector, ILogger<HoverHandler> logger
+    public HoverHandler(Workspace workspace, TextDocumentSelector documentSelector, ILogger<HoverHandler> logger
     , Func<ILanguageServer> getServer)
     {
         _workspace = workspace;
@@ -51,7 +51,7 @@ public sealed class HoverHandler : HoverHandlerBase
 
     Func<ILanguageServer> _getServer;
 
-    readonly DocumentSelector _documentSelector;
+    readonly TextDocumentSelector _documentSelector;
     readonly ILogger<HoverHandler> _logger;
     readonly Workspace _workspace;
 }
